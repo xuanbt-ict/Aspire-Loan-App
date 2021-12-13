@@ -11,6 +11,12 @@ class Loan extends Model
 {
     use HasFactory;
 
+    const STATUSES = [
+        'created' => 'created',
+        'approved' => 'approved',
+        'rejected' => 'rejected'
+    ];
+
     /**
      * @var array
      */
