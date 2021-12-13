@@ -1,0 +1,23 @@
+version: '3'
+
+volumes:
+  mysql-dt: {}
+
+services:
+  db:
+    image: mariadb:10.3
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_USERNAME: root
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: homestead
+    volumes:
+      - mysql-dt:/var/lib/mysql
+
+  dbadmin:
+    image: adminer
+    ports:
+      - 8080:8080
