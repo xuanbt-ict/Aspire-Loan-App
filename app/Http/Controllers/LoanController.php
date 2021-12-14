@@ -27,6 +27,25 @@ class LoanController extends Controller
      *
      * @param Request $request
      * @return JsonResponse
+     * 
+     * @OA\Get(
+     * path="/api/loan",
+     * tags={"Loan"},
+     * security={ {"sanctum": {} }},
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Get list loans of user",
+     *     @OA\MediaType(
+     *          mediaType="application/json",
+     *     )
+     * ),
+     * 
+     * @OA\Response(
+     *   response=401,
+     *   description="Unauthorized"
+     * ),
+     * )
      */
     public function index(Request $request)
     {
@@ -40,6 +59,50 @@ class LoanController extends Controller
      *
      * @param Request $request
      * @return JsonResponse
+     * 
+     * @OA\Post(
+     * path="/api/loan",
+     * tags={"Loan"},
+     * security={ {"sanctum": {} }},
+     * 
+     * @OA\Parameter(
+     *     name="amount",
+     *     in="query",
+     *     required=true,
+     *     @OA\Schema(
+     *          type="integer",
+     *     )
+     * ),
+     * @OA\Parameter(
+     *     name="loan_term",
+     *     in="query",
+     *     required=true,
+     *     @OA\Schema(
+     *         type="integer"
+     *     )
+     * ),
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Create loan",
+     *     @OA\MediaType(
+     *          mediaType="application/json",
+     *     )
+     * ),
+     * @OA\Response(
+     *   response=401,
+     *   description="Unauthorized"
+     * ),
+     * @OA\Response(
+     *   response=422,
+     *   description="Validation Error Messages",
+     *   @OA\JsonContent(
+     *      @OA\Property(property="status", type="string", example="false"),
+     *      @OA\Property(property="result", type="string", example="[]"),
+     *   )
+     * ),
+     * 
+     * )
      */
     public function store(CreateLoanRequest $request)
     {
@@ -53,12 +116,64 @@ class LoanController extends Controller
      *
      * @param Request $request
      * @return JsonResponse
+     * 
+     * @OA\Put(
+     * path="/api/loan/{id}",
+     * tags={"Loan"},
+     * security={ {"sanctum": {} }},
+     * 
+     * @OA\Parameter(
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(
+     *          type="number",
+     *     )
+     * ),
+     * @OA\Parameter(
+     *     name="status",
+     *     in="query",
+     *     required=true,
+     *     @OA\Schema(
+     *          type="string",
+     *          enum={"created", "approved", "rejected"},
+     *          default="created"
+     *     )
+     * ),
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Update loan status",
+     *     @OA\MediaType(
+     *          mediaType="application/json",
+     *     )
+     * ),
+     * @OA\Response(
+     *   response=401,
+     *   description="Unauthorized"
+     * ),
+     * @OA\Response(
+     *   response=403,
+     *   description="Forbidden"
+     * ),
+     * @OA\Response(
+     *   response=422,
+     *   description="Validation Error Messages",
+     *   @OA\JsonContent(
+     *      @OA\Property(property="status", type="string", example="false"),
+     *      @OA\Property(property="result", type="string", example="[]"),
+     *   )
+     * ),
+     * 
+     * )
      */
     public function update(UpdateLoanRequest $request, $id)
     {
-        $user = $request->user();
-        $loan = $user->loans()->findOrFail($id);
-        $this->loanService->update($loan, $request->all());
+        $loan = $this->loanService->update($id, $request->all());
+
+        if (!$loan) {
+            return abort(404, 'Can not find the loan record');
+        }
 
         return new LoanResource($loan);
     }

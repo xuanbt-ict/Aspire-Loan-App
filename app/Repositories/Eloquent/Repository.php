@@ -52,12 +52,13 @@ abstract class Repository implements RepositoryInterface
 
     /**
      * Get one
-     * @param $id
+     * @param integer $id
+     * @param array $filter
      * @return mixed
      */
-    public function find($id)
+    public function find($id, $filter = [])
     {
-        $result = $this->_model->find($id);
+        $result = $this->_model->where($filter)->find($id);
 
         return $result;
     }
@@ -90,7 +91,7 @@ abstract class Repository implements RepositoryInterface
      */
     public function save($record)
     {
-        return $this->_model->save($record);
+        return $record->save();
     }
 
     /**

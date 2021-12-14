@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Loan;
 use App\Models\User;
 use App\Repositories\LoanRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class LoanService
 {
@@ -38,28 +39,46 @@ class LoanService
      */
     public function create(User $user, array $data = [])
     {
-        $amount = $data['amount'] ?? 0;
+        try {
+            DB::beginTransaction();
 
-        return $this->loanRepository->create([
-            'user_id' => $user->id,
-            'amount' => $amount,
-            'balance' => $amount,
-            'loan_term' => $data['loan_term'] ?? 0,
-            'status' => Loan::STATUSES['created']
-        ]);
+            $amount = $data['amount'] ?? 0;
+
+            $loan = $this->loanRepository->create([
+                'user_id' => $user->id,
+                'amount' => $amount,
+                'balance' => $amount,
+                'loan_term' => $data['loan_term'] ?? 0,
+                'status' => Loan::STATUSES['created']
+            ]);
+            
+            DB::commit();
+
+            return $loan;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
     }
 
     /**
-     * @param Loan $loan
+     * @param integer $id
      * @param array $data
      * @return \App\Models\Loan
      */
-    public function update(Loan $loan, array $data = [])
+    public function update($id, array $data = [])
     {
-        $loan->fill([
-            'status' => $data['status']
-        ]);
+        try {
+            DB::beginTransaction();
 
-        return $this->loanRepository->save($loan);
+            $loan = $this->loanRepository->update($id, $data);
+            
+            DB::commit();
+
+            return $loan;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
     }
 }

@@ -17,6 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('App\Http\Controllers')->group(function() {
     Route::post('login', 'AuthController@login');
     Route::get('profile', 'AuthController@getProfile');
+
+    Route::group(['prefix' => 'loan'], function () {
+        Route::get('/', 'LoanController@index');
+        Route::post('/', 'LoanController@store');
+        Route::put('{id}', 'LoanController@update');
+    });
+
+    Route::group(['prefix' => 'payment'], function () {
+        Route::post('/', 'PaymentController@store');
+    });
 });
 
 

@@ -18,41 +18,45 @@ class AuthController extends Controller
     }
 
     /**
+     * 
+     * @param LoginRequest $request
+     * @return JsonResponse
+     * 
      * @OA\Post(
-     *  path="/api/login",
-     *  tags={"Authentication"},
+     * path="/api/login",
+     * tags={"Authentication"},
      *
-     *  @OA\Parameter(
-     *      name="email",
-     *      in="query",
-     *      required=true,
-     *      @OA\Schema(
-     *           type="string",
-     *      )
-     *  ),
-     *  @OA\Parameter(
-     *      name="password",
-     *      in="query",
-     *      required=true,
-     *      @OA\Schema(
-     *          type="string"
-     *      )
-     *  ),
-     *  @OA\Response(
-     *      response=200,
-     *      description="Login Successful",
-     *      @OA\MediaType(
-     *           mediaType="application/json",
-     *      )
-     *  ),
-     *  @OA\Response(
-     *    response=422,
-     *    description="Validation Error Messages",
-     *    @OA\JsonContent(
-     *       @OA\Property(property="status", type="string", example="false"),
-     *       @OA\Property(property="result", type="string", example="[]"),
-     *    )
-     *  ),
+     * @OA\Parameter(
+     *     name="email",
+     *     in="query",
+     *     required=true,
+     *     @OA\Schema(
+     *          type="string",
+     *     )
+     * ),
+     * @OA\Parameter(
+     *     name="password",
+     *     in="query",
+     *     required=true,
+     *     @OA\Schema(
+     *         type="string"
+     *     )
+     * ),
+     * @OA\Response(
+     *     response=200,
+     *     description="Login Successful",
+     *     @OA\MediaType(
+     *          mediaType="application/json",
+     *     )
+     * ),
+     * @OA\Response(
+     *   response=422,
+     *   description="Validation Error Messages",
+     *   @OA\JsonContent(
+     *      @OA\Property(property="status", type="string", example="false"),
+     *      @OA\Property(property="result", type="string", example="[]"),
+     *   )
+     * ),
      *)
      */
     public function login(LoginRequest $request)
@@ -75,17 +79,17 @@ class AuthController extends Controller
 
     /**
      * @OA\Get(
-     *  path="/api/profile",
-     *  tags={"Authentication"},
-     *  security={ {"sanctum": {} }},
+     * path="/api/profile",
+     * tags={"Authentication"},
+     * security={ {"sanctum": {} }},
      *
-     *  @OA\Response(
-     *      response=200,
-     *      description="Get profile info",
-     *      @OA\MediaType(
-     *           mediaType="application/json",
-     *      )
-     *  )
+     * @OA\Response(
+     *     response=200,
+     *     description="Get profile info",
+     *     @OA\MediaType(
+     *          mediaType="application/json",
+     *     )
+     * )
      *)
      */
     public function getProfile(Request $request)

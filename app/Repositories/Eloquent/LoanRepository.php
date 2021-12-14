@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\Loan;
 use App\Models\User;
 use App\Repositories\Eloquent\Repository;
+use App\Repositories\LoanRepositoryInterface;
 
 class LoanRepository extends Repository implements LoanRepositoryInterface
 {

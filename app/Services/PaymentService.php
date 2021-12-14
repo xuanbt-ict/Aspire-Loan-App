@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Exceptions\CreatePaymentForUnApprovedLoanException;
+use App\Exceptions\PayAmountBiggerRemainDebtException;
 use App\Models\Loan;
 use App\Models\User;
 use App\Repositories\LoanRepositoryInterface;
@@ -38,12 +40,26 @@ class PaymentService
     public function create(User $user, array $data)
     {
         try {
-            DB::startTransaction();
+            DB::beginTransaction();
 
             $loanId = $data['loan_id'];
             $amount = $data['amount'];
 
-            $loan = $user->loans()->where('status', Loan::STATUSES['approved'])->findOrFail($loanId);
+            $loan = $this->loanRepository->find($loanId, [
+                'user_id' => $user->id
+            ]);
+
+            if (!$loan) {
+                abort(404, 'Can not find the loan record');
+            }
+
+            if ($loan->status !== Loan::STATUSES['approved']) {
+                throw new CreatePaymentForUnApprovedLoanException();
+            }
+
+            if ($loan->balance < $amount) {
+                throw new PayAmountBiggerRemainDebtException();
+            }
 
             $payment = $this->paymentRepository->create([
                 'loan_id' => $loan->id,
@@ -54,11 +70,11 @@ class PaymentService
             $this->loanRepository->save($loan);
 
             DB::commit();
+
+            return $payment;
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
         }
-
-        return $payment;
     }
 }

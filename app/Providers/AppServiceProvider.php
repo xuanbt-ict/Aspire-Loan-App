@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Repositories\Eloquent\LoanRepository;
+use App\Repositories\Eloquent\PaymentRepository;
+use App\Repositories\LoanRepositoryInterface;
+use App\Repositories\PaymentRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
