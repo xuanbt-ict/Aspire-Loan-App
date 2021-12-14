@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::namespace('App\Http\Controllers')->group(function() {
+Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('login', 'AuthController@login');
     Route::get('profile', 'AuthController@getProfile');
 
@@ -28,5 +28,3 @@ Route::namespace('App\Http\Controllers')->group(function() {
         Route::post('/', 'PaymentController@store');
     });
 });
-
-

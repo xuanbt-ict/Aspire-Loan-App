@@ -51,6 +51,11 @@ Admin: admin@gmail.com - secret
 User: user@gmail.com - password
 ```
 
+### Check coding convention
+```
+$ ./vendor/bin/phpcs
+```
+
 ### Run test
 ```
 $ php artisan test

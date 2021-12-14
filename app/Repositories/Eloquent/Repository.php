@@ -9,7 +9,7 @@ abstract class Repository implements RepositoryInterface
     /**
      * @var \Illuminate\Database\Eloquent\Model
      */
-    protected $_model;
+    protected $model;
 
     /**
      * @var integer
@@ -35,7 +35,7 @@ abstract class Repository implements RepositoryInterface
      */
     public function setModel()
     {
-        $this->_model = app()->make(
+        $this->model = app()->make(
             $this->getModel()
         );
     }
@@ -47,7 +47,7 @@ abstract class Repository implements RepositoryInterface
      */
     public function getAll($params = [])
     {
-        return $this->_model->all();
+        return $this->model->all();
     }
 
     /**
@@ -58,7 +58,7 @@ abstract class Repository implements RepositoryInterface
      */
     public function find($id, $filter = [])
     {
-        $result = $this->_model->where($filter)->find($id);
+        $result = $this->model->where($filter)->find($id);
 
         return $result;
     }
@@ -70,7 +70,7 @@ abstract class Repository implements RepositoryInterface
      */
     public function create(array $attributes)
     {
-        return $this->_model->create($attributes);
+        return $this->model->create($attributes);
     }
 
     /**
@@ -80,7 +80,7 @@ abstract class Repository implements RepositoryInterface
      */
     public function insertBulk(array $data)
     {
-        return $this->_model->insert($data);
+        return $this->model->insert($data);
     }
 
     /**
@@ -128,5 +128,4 @@ abstract class Repository implements RepositoryInterface
 
         return false;
     }
-
 }

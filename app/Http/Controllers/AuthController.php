@@ -18,10 +18,10 @@ class AuthController extends Controller
     }
 
     /**
-     * 
+     *
      * @param LoginRequest $request
      * @return JsonResponse
-     * 
+     *
      * @OA\Post(
      * path="/api/login",
      * tags={"Authentication"},

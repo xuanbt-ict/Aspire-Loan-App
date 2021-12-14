@@ -27,7 +27,7 @@ class LoanController extends Controller
      *
      * @param Request $request
      * @return JsonResponse
-     * 
+     *
      * @OA\Get(
      * path="/api/loan",
      * tags={"Loan"},
@@ -40,7 +40,7 @@ class LoanController extends Controller
      *          mediaType="application/json",
      *     )
      * ),
-     * 
+     *
      * @OA\Response(
      *   response=401,
      *   description="Unauthorized"
@@ -59,12 +59,12 @@ class LoanController extends Controller
      *
      * @param Request $request
      * @return JsonResponse
-     * 
+     *
      * @OA\Post(
      * path="/api/loan",
      * tags={"Loan"},
      * security={ {"sanctum": {} }},
-     * 
+     *
      * @OA\Parameter(
      *     name="amount",
      *     in="query",
@@ -101,7 +101,7 @@ class LoanController extends Controller
      *      @OA\Property(property="result", type="string", example="[]"),
      *   )
      * ),
-     * 
+     *
      * )
      */
     public function store(CreateLoanRequest $request)
@@ -116,12 +116,12 @@ class LoanController extends Controller
      *
      * @param Request $request
      * @return JsonResponse
-     * 
+     *
      * @OA\Put(
      * path="/api/loan/{id}",
      * tags={"Loan"},
      * security={ {"sanctum": {} }},
-     * 
+     *
      * @OA\Parameter(
      *     name="id",
      *     in="path",
@@ -164,7 +164,7 @@ class LoanController extends Controller
      *      @OA\Property(property="result", type="string", example="[]"),
      *   )
      * ),
-     * 
+     *
      * )
      */
     public function update(UpdateLoanRequest $request, $id)

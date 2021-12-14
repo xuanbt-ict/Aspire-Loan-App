@@ -25,12 +25,12 @@ class PaymentController extends Controller
      *
      * @param Request $request
      * @return JsonResponse
-     * 
+     *
      * @OA\Post(
      * path="/api/payment",
      * tags={"Payment"},
      * security={ {"sanctum": {} }},
-     * 
+     *
      * @OA\Parameter(
      *     name="loan_id",
      *     in="query",
@@ -75,7 +75,7 @@ class PaymentController extends Controller
      *      @OA\Property(property="result", type="string", example="[]"),
      *   )
      * ),
-     * 
+     *
      * )
      */
     public function store(CreatePaymentRequest $request)

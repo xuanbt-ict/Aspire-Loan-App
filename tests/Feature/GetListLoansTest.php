@@ -60,7 +60,7 @@ class GetListLoansTest extends TestCase
 
     public function test_get_list_loans()
     {
-        for ($i=0; $i < 10; $i++) { 
+        for ($i=0; $i < 10; $i++) {
             Loan::factory()->create([
                 'user_id' => $this->user->id
             ]);
